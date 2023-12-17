@@ -5,6 +5,7 @@ import { backendUrl } from "../../constants";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../contexts/AppContext";
+import { toast } from "react-toastify";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -12,14 +13,16 @@ const Login = () => {
     const handleSubmit = e => {
         e.preventDefault();
 
-        axios.post(backendUrl + 'user-login', { email: e.target["login-email"].value, password: e.target["login-password"].value }).then(res => {
+        axios.post(backendUrl + 'login', { email: e.target["login-email"].value, password: e.target["login-password"].value }).then(res => {
             // console.log(res.data.toke);
             if (res.data.token.length) {
                 localStorage.setItem("token", res.data.token)
                 setStore({ ...store, token: res.data.token })
                 navigate("/")
             }
-        })
+        }).catch(error => toast.error(error.response.data.message, {
+            position: "bottom-center"
+        }))
     }
     return (
         <div className="w-screen h-screen flex items-center justify-center">
