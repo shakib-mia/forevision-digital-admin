@@ -39,7 +39,7 @@ const InputField = ({
             {type !== "checkbox" ? (
                 <>
                     {label && <div className="flex justify-between">
-                        <label htmlFor={id} className="ml-0">
+                        <label htmlFor={id} className="ml-0 font-semibold">
                             {label}
                         </label>
                         <span className="text-black-secondary">
@@ -95,6 +95,7 @@ const InputField = ({
                                                 ? "px-2 py-[12px]"
                                                 : "mx-2 my-[23px]"
                                                 } file:rounded-[3px] file:mr-3 w-full`}
+
                                             id={id}
                                             placeholder={placeholder}
                                         />

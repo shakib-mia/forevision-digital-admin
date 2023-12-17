@@ -2,16 +2,21 @@ import axios from "axios";
 import Button from "../../components/Button/Button";
 import InputField from "../../components/InputField/InputField";
 import { backendUrl } from "../../constants";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../../contexts/AppContext";
 
 const Login = () => {
     const navigate = useNavigate();
+    const { setStore, store } = useContext(AppContext)
     const handleSubmit = e => {
         e.preventDefault();
 
-        axios.post(backendUrl + 'login', { email: e.target["login-email"].value, password: e.target["login-password"].value }).then(res => {
+        axios.post(backendUrl + 'user-login', { email: e.target["login-email"].value, password: e.target["login-password"].value }).then(res => {
+            // console.log(res.data.toke);
             if (res.data.token.length) {
                 localStorage.setItem("token", res.data.token)
+                setStore({ ...store, token: res.data.token })
                 navigate("/")
             }
         })
@@ -28,7 +33,9 @@ const Login = () => {
                     <InputField name="login-password" type="password" label="Password" containerClassName="w-full" id="login-password" placeholder="Enter Your Password Address" />
                     <Button text="Login" type="submit" />
                 </div>
-
+                <div className="text-right">
+                    <Link to={'/forgot-password'} className="text-primary underline hover:no-underline">Forgot Your Password?</Link>
+                </div>
             </form>
         </div>
     );

@@ -59,7 +59,8 @@ Button.propTypes = {
     small: PropTypes.bool,
     paddingZero: PropTypes.bool,
     children: PropTypes.node,
-    className: PropTypes.string
+    className: PropTypes.string,
+    btnClassName: PropTypes.string
 }
 
 export default Button;
