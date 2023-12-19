@@ -36,7 +36,11 @@ const UploadSection = () => {
             }
 
             axios.post(backendUrl + 'revenue-upload', batch, config)
-                .then(({ data }) => console.log(data))
+                .then(({ data }) => {
+                    if (data.acknowledged) {
+                        toast.success("File Uploaded Successfully")
+                    }
+                })
                 .catch(err => console.log(err.response.data))
         }
 
@@ -63,11 +67,15 @@ const UploadSection = () => {
                 const sheetData = utils.sheet_to_json(workbook.Sheets[sheetName], { defval: '' });
                 jsonData[sheetName] = sheetData;
             });
+
+
             const dataKey = Object.keys(jsonData)[0]
             setUploadedJSON(jsonData[dataKey]);
 
+            // console.log(uploadedJSON);
+
             if ((hasAllFields(jsonData[dataKey][0], fields))) {
-                console.log(Object.keys(jsonData[dataKey][0]));
+                // console.log();
 
                 setUploadedJSON(jsonData[dataKey]);
             } else {
