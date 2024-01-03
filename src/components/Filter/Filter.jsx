@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { backendUrl } from '../../constants';
 import Button from '../Button/Button';
 import { AppContext } from '../../contexts/AppContext';
+import { toast } from 'react-toastify';
 
 const Filter = () => {
     const months = ["January",
@@ -37,7 +38,11 @@ const Filter = () => {
             }
         }
 
-        axios.delete(backendUrl + 'revenue' + '/' + reqBody.month + '/' + reqBody.year + '/' + reqBody.platform, config).then(({ data }) => console.log(data))
+        axios.delete(backendUrl + 'revenue' + '/' + reqBody.month + '/' + reqBody.year + '/' + reqBody.platform, config).then(({ data }) => {
+            if (data.acknowledged) {
+                toast.success("Data Successfully Deleted")
+            }
+        })
     }
     return (
         <form className="flex mt-6 items-center justify-center overflow-y-visible" onSubmit={handleDelete}>
@@ -56,6 +61,7 @@ const Filter = () => {
                     <option>2021</option>
                     <option>2022</option>
                     <option>2023</option>
+                    <option>2024</option>
                 </select>
             </div>
 
